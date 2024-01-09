@@ -24,6 +24,18 @@ const lightbox = new SimpleLightbox('.gallery a', {
   docClose: true,
 });
 
+function clearGallery() {
+  gallery.innerHTML = '';
+}
+
+function showLoader() {
+  loader.style.display = 'block';
+}
+
+function hideLoader() {
+  loader.style.display = 'none';
+}
+
 function searchImg(params) {
   return fetch(`https://pixabay.com/api/?${params}`)
     .then(response => {
@@ -66,14 +78,14 @@ function searchImg(params) {
       console.log(error.message);
     })
     .finally(() => {
-      loader.style.display = 'none';
+      hideLoader();
     });
 }
 
 form.addEventListener('submit', event => {
   event.preventDefault();
-  gallery.innerHTML = '';
-  loader.style.display = 'block';
+  clearGallery()
+  showLoader();
   searchParamsDefaults.q = event.target.elements.search.value.trim();
   const searchParams = new URLSearchParams(searchParamsDefaults);
   searchImg(searchParams);
