@@ -2,6 +2,8 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import makeMarcup from './js/render-functions.js'
+import fetchData from './js/pixabay-api.js'
 
 const form = document.querySelector('.form');
 const gallery = document.querySelector('.gallery');
@@ -37,33 +39,10 @@ function hideLoader() {
 }
 
 function searchImg(params) {
-  return fetch(`https://pixabay.com/api/?${params}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      return response.json();
-    })
+  return fetchData(params)
     .then(({ hits }) => {
       if (hits.length > 0) {
-        const renderImg = hits.reduce((html, hit) => {
-          return (
-            html +
-            `<li class="gallery-item">
-        <a href=${hit.largeImageURL}> 
-          <img class="gallery-img" src =${hit.webformatURL} alt=${hit.tags}/>
-        </a>
-        <div class="gallery-text-box">
-          <p>Likes: <span class="text-value">${hit.likes}</span></p>
-          <p>views: <span class="text-value">${hit.views}</span></p>
-          <p>comments: <span class="text-value">${hit.comments}</span></p>
-          <p>downloads: <span class="text-value">${hit.downloads}</span></p>
-      </div>
-      </li>`
-          );
-        }, '');
-
-        gallery.innerHTML = renderImg;
+        makeMarcup (hits);
 
         lightbox.refresh();
       } else {
