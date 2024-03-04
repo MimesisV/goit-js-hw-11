@@ -52,13 +52,13 @@ function searchImg(params) {
             'Sorry, there are no images matching your search query. Please try again!',
         });
       }
-    })
-    .catch(error => {
-      console.log(error.message);
-    })
-    .finally(() => {
-      hideLoader();
-    });
+      })
+      .catch(error => {
+        console.log(error.message);
+      })
+      .finally(() => {
+        hideLoader();
+      });
 }
 
 form.addEventListener('submit', event => {
