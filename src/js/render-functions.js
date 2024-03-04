@@ -1,6 +1,6 @@
 const gallery = document.querySelector('.gallery');
 
-export default function makeMarcup (hits) {
+export default function makeMarkup (hits) {
     const renderImg = hits.reduce((html, hit) => {
         return (
           html +

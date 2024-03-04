@@ -2,7 +2,7 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
-import makeMarcup from './js/render-functions.js'
+import makeMarkup from './js/render-functions.js'
 import fetchData from './js/pixabay-api.js'
 
 const form = document.querySelector('.form');
@@ -42,7 +42,7 @@ function searchImg(params) {
   return fetchData(params)
     .then(({ hits }) => {
       if (hits.length > 0) {
-        makeMarcup (hits);
+        makeMarkup (hits);
 
         lightbox.refresh();
       } else {
@@ -54,7 +54,10 @@ function searchImg(params) {
       }
       })
       .catch(error => {
-        console.log(error.message);
+        iziToast.error({
+          position: 'topRight',
+          message:`Sorry there was an error: ${error}`,
+        });
       })
       .finally(() => {
         hideLoader();
